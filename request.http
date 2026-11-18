@@ -1,0 +1,458 @@
+
+@host = http://localhost:3000
+@myId = 6700000001
+@otherId = 6722772926
+
+
+# 1.1 SIGN UP / LOGIN  (no token needed)
+
+
+### T01 sign up a new student (id 68xxxxxxxx -> catalog year 2025)
+# Should be 201 "Account created successfully"
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+    "username": "test_signup",
+    "password": "mypassword123",
+    "student_id": 6800000001,
+    "major": "Digital Engineering",
+    "current_semester": "1"
+}
+
+### T02 sign up again with the same username / student id
+# Should be 409 "Username or Student ID already exist"
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+    "username": "test_signup",
+    "password": "mypassword123",
+    "student_id": 6800000001,
+    "major": "Digital Engineering",
+    "current_semester": "1"
+}
+
+### T03 student id 65xxxxxxxx -> catalog year 2022 does not exist
+# Should be 400 "Catalog year 2022 is not supported in Academic_Catalog"
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+    "username": "test_65",
+    "password": "mypassword123",
+    "student_id": 6500000001,
+    "major": "Digital Engineering",
+    "current_semester": "1"
+}
+
+### T04 student id is not 10 digits
+# Should be 400 "Student ID must be exactly 10 digits"
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+    "username": "test_short",
+    "password": "mypassword123",
+    "student_id": 672278283,
+    "major": "Digital Engineering",
+    "current_semester": "1"
+}
+
+### T05 missing field (no password)
+# Should be 400 "Missing required fields"
+POST {{host}}/auth/signup
+Content-Type: application/json
+
+{
+    "username": "test_missing",
+    "student_id": 6800000002,
+    "major": "Digital Engineering",
+    "current_semester": "1"
+}
+
+### T06 log in with the account created in T01
+# Should be 200, profile.role = "user", profile.student_id = 6800000001, token present
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "test_signup",
+    "password": "mypassword123"
+}
+
+### T07 wrong password
+# Should be 401 "Invalid credentials"
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "demo_user",
+    "password": "wrong-password"
+}
+
+### T08 username that does not exist
+# Should be 401 "Invalid credentials"
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "nobody",
+    "password": "whatever"
+}
+
+### T09 missing password
+# Should be 400 "Username and password are required"
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "demo_user"
+}
+### test1 ###
+### T10 LOGIN demo user  (run first ก่อน T01 เลย)
+# Should be 200, profile.role = "user", profile.student_id = 6700000001
+# @name loginUser
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "demo_user",
+    "password": "DemoUser@2026"
+}
+
+### T11 LOGIN demo admin  (run first ก่อน T01 เลย)
+# Should be 200, profile.role = "admin", profile.student_id = null
+# @name loginAdmin
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "demo_admin",
+    "password": "DemoAdmin@2026"
+}
+
+### test3 ###
+### T12 LOGIN demo dev  (run first ก่อน T01 เลย)
+# Should be 200, profile.role = "dev", profile.student_id = null
+# @name loginDev
+POST {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "username": "demo_dev",
+    "password": "DemoDev@2026"
+}
+
+
+
+# 1.2 TOKEN CHECKS
+
+
+### T13 no token
+# Should be 401 "Access token required"
+GET {{host}}/student/{{myId}}
+
+### T14 fake token
+# Should be 401 "Invalid or expired token"
+GET {{host}}/student/{{myId}}
+Authorization: Bearer this.is.not.a.token
+
+### T15 route that does not exist
+# Should be 404 "not found"
+GET {{host}}/nope
+
+
+# 2. USER  (token of demo_user) - student function
+
+### T16 profile (owner)
+# Should be 200, catalog_year "2024", major "Digital Engineering", cgpa/total_courses filled by triggers
+GET {{host}}/student/{{myId}}
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T17 English score that passes
+# Should be 200 "Update successful", newStatus "Pass"
+PUT {{host}}/student/{{myId}}/eng_score
+Authorization: Bearer {{loginUser.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "testType": "IELTS",
+    "score": 7
+}
+
+### T18 English score that fails
+# Should be 200, newStatus "Fail".
+PUT {{host}}/student/{{myId}}/eng_score
+Authorization: Bearer {{loginUser.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "testType": "IELTS",
+    "score": 5
+}
+
+### T19 target honor
+# Should be 200 "Target honor updated successfully"
+PUT {{host}}/student/{{myId}}/target_honor
+Authorization: Bearer {{loginUser.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "honor_type": "Second Class Honors"
+}
+
+### T20 study option and track
+# Should be 200 "Study info updated successfully"
+PUT {{host}}/student/{{myId}}/study_info
+Authorization: Bearer {{loginUser.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "study_option": "Application Software Development",
+    "study_track": "Extended Training"
+}
+
+### T21 dashboard progress
+# Should be 200 Show the dashboard
+GET {{host}}/dashboard/{{myId}}/progress
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T22 course catalogue
+# Should be 200, All courses
+GET {{host}}/course
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T23 my semester 2026 / 1
+# Should be 200, 3 courses (CSS322, CSS324, CSS325) grade null, target honor shown
+GET {{host}}/plan/student/{{myId}}/semester/2026/1
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T24 graduation plan (all semesters)
+# Should be 200
+GET {{host}}/plan/student/{{myId}}/all
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T25 add a course to the plan
+# Should be 201 "Course plan updated successfully" 
+# run T23 to check
+POST {{host}}/plan/student/{{myId}}/enrollment
+Authorization: Bearer {{loginUser.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "CSS326",
+    "academic_year": 2026,
+    "semester_no": 1,
+    "grade_earned": ""
+}
+
+### T26 remove that course
+# Should be 200 "Course removed from plan"
+#run it twice -> The second time Should be 404 "Course not found in your plan"
+DELETE {{host}}/plan/student/{{myId}}/enrollment/CSS326
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T27 user tries to open another student's data
+# Should be 403 "Access denied: You can only access your own data"
+GET {{host}}/student/{{otherId}}
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### test2 ###
+### T28 user tries an admin endpoint
+# Should be 403 "Access denied: Admin role required"
+GET {{host}}/admin/users
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T29 user tries dev endpoints
+# Should be 403 "Access denied: Dev role required"
+GET {{host}}/dev/stats
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+### T30 user tries to read the request log
+# Should be 403 "Access denied: Dev role required"
+GET {{host}}/dev/request-log
+Authorization: Bearer {{loginUser.response.body.$.token}}
+
+
+# 2. ADMIN  (token of demo_admin) - student list (read only), add / remove courses
+
+
+### T31 student list
+# Should be 200
+GET {{host}}/admin/users
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+### T32 add a course
+# Should be 201 "Course added successfully"
+POST {{host}}/admin/courses
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "DES999",
+    "course_name": "Test Course",
+    "credit": 3,
+    "course_type": "Elective",
+    "schedule": "Year 4 Semester 1"
+}
+
+### T33 add the same course again
+# Should be 409 "Course code already exists"
+POST {{host}}/admin/courses
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "DES999",
+    "course_name": "Test Course",
+    "credit": 3,
+    "course_type": "Elective"
+}
+
+### T34 invalid course type
+# Should be 400 "Course type must be Core or Elective"
+POST {{host}}/admin/courses
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "DES998",
+    "course_name": "Bad Type",
+    "credit": 3,
+    "course_type": "Optional"
+}
+
+### T35 invalid credit
+# Should be 400 "Credit must be a positive integer"
+POST {{host}}/admin/courses
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "DES997",
+    "course_name": "Zero Credit",
+    "credit": 0,
+    "course_type": "Core"
+}
+
+### T36 missing field
+# Should be 400 "Missing required fields"
+POST {{host}}/admin/courses
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "DES996",
+    "credit": 3,
+    "course_type": "Core"
+}
+
+### T37 remove the course added in T32
+# Should be 200 "Course deleted successfully"
+DELETE {{host}}/admin/courses/DES999
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+### T38 remove it again
+# Should be 404 "Course not found"
+DELETE {{host}}/admin/courses/DES999
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+### T39 remove a course that students are enrolled in
+# Should be 409 "There are students enrolled in this class."  GTS101 must still exist in the course table
+DELETE {{host}}/admin/courses/GTS101
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+### T40 admin VIEWS another student's data (GET is allowed)
+# Should be 200
+GET {{host}}/student/{{otherId}}
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+### T41 admin tries to CHANGE student data (study info)
+# Should be 403 "Access denied: Admin can view student data but cannot modify it"
+PUT {{host}}/student/{{otherId}}/study_info
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "study_option": "Data Science"
+}
+
+### T42 admin tries to add a course to a student's plan
+# Should be 403 same message as T41
+POST {{host}}/plan/student/{{otherId}}/enrollment
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "CSS326",
+    "academic_year": 2026,
+    "semester_no": 1
+}
+
+### T43 admin tries to remove a course from a student's plan
+# Should be 403 same message as T41
+DELETE {{host}}/plan/student/{{otherId}}/enrollment/CSS326
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+### T44 admin cannot access stats
+# Should be 404 "not found"  
+GET {{host}}/admin/stats
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+### T45 admin tries dev endpoints
+# Should be 403 "Access denied: Dev role required"
+GET {{host}}/dev/stats
+Authorization: Bearer {{loginAdmin.response.body.$.token}}
+
+
+# 3. DEV - stats, users with dates, request log
+
+### T46 user statistics
+# Should be 200 
+GET {{host}}/dev/stats
+Authorization: Bearer {{loginDev.response.body.$.token}}
+
+### T47 all accounts with created date and last visit
+# Should be 200, no password field
+GET {{host}}/dev/users
+Authorization: Bearer {{loginDev.response.body.$.token}}
+
+### T48 request log (latest 50)
+# Should be 200 newest first.
+GET {{host}}/dev/request-log?limit=50
+Authorization: Bearer {{loginDev.response.body.$.token}}
+
+### T49 request log: only 404
+# Should be 200, every entry has status 404 (run T15 ก่อน)
+GET {{host}}/dev/request-log?status=404
+Authorization: Bearer {{loginDev.response.body.$.token}}
+
+### T50 request log: all 4xx, newest 5
+# Should be 200, at most 5 entries, all with status (Txx ก่อนหน้า appear)
+GET {{host}}/dev/request-log?status=4xx&limit=5
+Authorization: Bearer {{loginDev.response.body.$.token}}
+
+### T51 dev tries an admin endpoint
+# Should be 403 "Access denied: Admin role required"
+GET {{host}}/admin/users
+Authorization: Bearer {{loginDev.response.body.$.token}}
+
+### test4 ###
+### T52 dev tries to add a course
+# Should be 403 "Access denied: Admin role required"
+POST {{host}}/admin/courses
+Authorization: Bearer {{loginDev.response.body.$.token}}
+Content-Type: application/json
+
+{
+    "course_code": "DES995",
+    "course_name": "Dev Should Not Add",
+    "credit": 3,
+    "course_type": "Core"
+}
+
+### T53 dev tries to open student data
+# Should be 403 "Access denied: You can only access your own data"
+GET {{host}}/student/{{otherId}}
+Authorization: Bearer {{loginDev.response.body.$.token}}
