@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>Create account | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+</head>
+
+<body data-page="signup" class="auth-page">
+  <div id="site-header"></div>
+  <main class="auth-layout page-width auth-layout--signup-centered">
+    <section class="auth-card auth-card--wide">
+      <h2>Create Account</h2>
+      <p class="auth-subtitle">Enter your details for GoDegree account.</p>
+      <form id="signup-form" class="form-stack form-grid" novalidate>
+        <label class="field field--span">
+          <span>Username</span>
+          <input id="signup-username" name="username" type="text" autocomplete="username" maxlength="25"
+            placeholder="Choose a username" required>
+        </label>
+        <label class="field">
+          <span>Student ID</span>
+          <input id="signup-student-id" name="student_id" type="text" inputmode="numeric" maxlength="10"
+            pattern="\d{10}" placeholder="10-digit student ID" required>
+          <small class="field-hint" id="catalog-hint">Enter your student ID to identify your catalog year.</small>
+        </label>
+        <label class="field">
+          <span>Major</span>
+          <select id="signup-major" name="major" required>
+            <option>Business and Supply Chain Analytics</option>
+            <option>Civil Engineering</option>
+            <option>Chemical Engineering</option>
+            <option>Computer Engineering</option>
+            <option>Digital Engineering</option>
+            <option>Electrical Engineering</option>
+            <option>Industrial Engineering and Smart Logistics</option>
+            <option>Mechanical Engineering</option>
+          </select>
+        </label>
+        <fieldset class="field field--span fieldset-field">
+          <legend>Current semester</legend>
+          <div class="choice-row">
+            <label class="choice-pill">
+              <input type="radio" name="current_semester" value="1" checked>
+              <span>Semester 1</span>
+            </label>
+            <label class="choice-pill">
+              <input type="radio" name="current_semester" value="2">
+              <span>Semester 2</span>
+            </label>
+            <label class="choice-pill">
+              <input type="radio" name="current_semester" value="3">
+              <span>Summer</span>
+            </label>
+          </div>
+        </fieldset>
+        <label class="field">
+          <span>Create Password</span>
+          <div class="password-wrap">
+            <input id="signup-password" name="password" type="password" autocomplete="new-password"
+              placeholder="At least 8 characters" minlength="8" required>
+            <button class="password-toggle" type="button" data-toggle-password="signup-password"
+              aria-label="Show password">
+              Show
+            </button>
+          </div>
+        </label>
+        <label class="field">
+          <span>Confirm Password</span>
+          <div class="password-wrap">
+            <input id="signup-confirm" name="confirm_password" type="password" autocomplete="new-password"
+              placeholder="Confirm your password" required>
+            <button class="password-toggle" type="button" data-toggle-password="signup-confirm"
+              aria-label="Show password">
+              Show
+            </button>
+          </div>
+        </label>
+        <p class="form-message field--span" id="signup-message" role="alert" aria-live="polite"></p>
+        <button class="button button--primary button--full field--span" type="submit" id="signup-submit">Create Account
+          <span aria-hidden="true">→</span></button>
+      </form>
+
+      <p class="auth-switch">Already have an account?<a href="/login.html"> Log In</a></p>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+
+</html>

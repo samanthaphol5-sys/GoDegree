@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>Dashboard | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+</head>
+
+<body data-page="dashboard" data-require-role="user">
+  <div id="site-header"></div>
+  <main>
+    <section class="page-hero">
+      <div class="page-width">
+        <h1>Dashboard</h1>
+        <p>Small Steps — Track what you have done so far</p>
+      </div>
+    </section>
+    <section class="page-width page-content dashboard-content">
+      <section class="overall-progress">
+        <div class="overall-progress__heading">
+          <div>
+            <h2>You are <strong id="overall-progress-number">—%</strong> closer to your graduation!</h2>
+          </div>
+        </div>
+        <div class="progress-track progress-track--large"><span id="overall-progress-bar" style="width:0%"></span></div>
+      </section>
+      <div class="section-title-row section-title-row--dashboard">
+        <div>
+          <h1>Graduation Requirements</h1>
+        </div>
+      </div>
+      <div class="requirement-grid">
+        <article class="requirement-card" id="credit-card">
+          <div class="requirement-card__top">
+            <h2>TOTAL CREDITS</h2>
+          </div>
+          <div class="requirement-value"><strong id="dashboard-credits">—</strong><span>/ 136</span></div>
+          <div class="progress-track"><span id="dashboard-credits-bar" style="width:0%"></span></div>
+          <div class="requirement-card__bottom"><span class="status-badge status-badge--progress"
+              id="dashboard-credits-status">In Progress</span><strong id="dashboard-credits-percent">—%</strong></div>
+        </article>
+        <article class="requirement-card" id="cgpa-card">
+          <div class="requirement-card__top"><h2>CUMULATIVE GPA</h2></div>
+          <div class="requirement-value"><strong id="dashboard-cgpa">—</strong><span>≥ 2.00</span></div>
+          <div class="progress-track"><span id="dashboard-cgpa-bar" style="width:0%"></span></div>
+          <div class="requirement-card__bottom"><span class="status-badge"
+              id="dashboard-cgpa-status">Checking</span><strong id="dashboard-cgpa-percent">—%</strong></div>
+        </article>
+        <article class="requirement-card" id="semester-card">
+          <div class="requirement-card__top"><h2>COMPLETED SEMESTERS</h2></div>
+          <div class="requirement-value"><strong id="dashboard-semesters">—</strong><span>≥ 7</span></div>
+          <div class="progress-track"><span id="dashboard-semesters-bar" style="width:0%"></span></div>
+          <div class="requirement-card__bottom"><span class="status-badge status-badge--progress"
+              id="dashboard-semesters-status">In Progress</span><strong id="dashboard-semesters-percent">—%</strong>
+          </div>
+        </article>
+        <article class="requirement-card requirement-card--english" id="english-card">
+          <div class="requirement-card__top"><h2>ENGLISH SCORE</h2><button class="icon-button" id="edit-english-open"
+              type="button" aria-label="Edit English score">✎</button></div>
+          <div class="english-result"><strong id="dashboard-english-score">Not entered</strong><span
+              id="dashboard-english-type">Add a test result</span></div>
+          <div class="progress-track"><span id="dashboard-english-bar" style="width:0%"></span></div>
+          <div class="requirement-card__bottom"><span class="status-badge status-badge--progress"
+              id="dashboard-english-status">In progress</span><strong id="dashboard-english-percent">0%</strong></div>
+        </article>
+      </div>
+      <p class="calculation-note">Progress is calculated by the GoDegree database from credits, completed semesters,
+        CGPA, and English-test status.</p>
+    </section>
+  </main>
+  <dialog class="modal" id="english-modal">
+    <form method="dialog" class="modal__close-form"><button class="modal-close" aria-label="Close"
+        value="cancel">×</button></form>
+    <h2>English Test Score</h2>
+    <p class="muted">Select your test type and enter the score for GoDegree to calculate your status.</p>
+    <form id="english-form" class="form-stack">
+      <label class="field"><span>Test type</span><select id="english-test-type" required>
+          <option value="IELTS">IELTS</option>
+          <option value="TU-GET_PBT">TU-GET PBT</option>
+          <option value="TU-GET_CBT">TU-GET CBT</option>
+          <option value="TOEFL_ITP">TOEFL ITP</option>
+          <option value="TOEFL_IBT">TOEFL iBT</option>
+          <option value="TOEIC">TOEIC</option>
+          <option value="CAMBRIDGE">Cambridge</option>
+          <option value="CEFR">CEFR</option>
+        </select></label>
+      <label class="field"><span>Score</span><input id="english-score-input" type="number" min="0" max="999.99"
+          step="0.01" required placeholder="Enter your score"></label>
+      <p class="field-hint" id="english-threshold-hint">IELTS pass threshold: 6.0</p>
+      <p class="form-message" id="english-message" role="status" aria-live="polite"></p>
+      <button class="button button--primary button--full" type="submit" id="english-save">Save Score</button>
+    </form>
+  </dialog>
+  <div id="site-footer"></div>
+</body>
+
+</html>

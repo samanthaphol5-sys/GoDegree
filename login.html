@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>Log in | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+</head>
+
+<body data-page="login" class="auth-page">
+  <div id="site-header"></div>
+  <main class="auth-layout page-width auth-layout--login-centered">
+    <section class="auth-card">
+      <h2>Log In</h2>
+      <p class="auth-subtitle">Enter your GoDegree account details.</p>
+      <form id="login-form" class="form-stack" novalidate>
+        <label class="field">
+          <span>Username</span>
+          <input id="login-username" name="username" type="text" autocomplete="username" maxlength="25"
+            placeholder="Enter your username" required>
+        </label>
+        <label class="field"><span>Password</span>
+          <div class="password-wrap">
+            <input id="login-password" name="password" type="password" autocomplete="current-password"
+              placeholder="Enter your password" required>
+            <button class="password-toggle" type="button" data-toggle-password="login-password"
+              aria-label="Show password">Show</button>
+          </div>
+        </label>
+        <p class="form-message" id="login-message" role="alert" aria-live="polite"></p>
+        <button class="button button--primary button--full" type="submit" id="login-submit">
+          Log in <span aria-hidden="true">→</span>
+        </button>
+      </form>
+
+      <p class="auth-switch">New to GoDegree?<a href="/signup.html"> Create Account</a></p>
+
+      <details class="demo-access">
+        <summary><i>DEMO TEST CASES</i></summary>
+        <div class="demo-access__items">
+          <button type="button" data-demo-login="user">
+            <strong>Student</strong>
+            <span>demo_user</span>
+          </button>
+          <button type="button" data-demo-login="admin">
+            <strong>Admin</strong>
+            <span>demo_admin</span>
+          </button>
+          <button type="button" data-demo-login="dev">
+            <strong>Developer</strong>
+            <span>demo_dev</span>
+          </button>
+        </div>
+      </details>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>Admin Workspace | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+  <script defer src="/assets/js/admin-catalog.js"></script>
+</head>
+
+<body id="top" data-page="admin" data-require-role="admin">
+  <div id="site-header"></div>
+  <main>
+    <section class="page-hero">
+      <div class="page-width">
+        <h1>ADMIN WORKSPACE</h1>
+      </div>
+    </section>
+    <section class="page-width page-content">
+      <nav class="admin-shortcuts" aria-label="Admin workspace shortcuts">
+        <h3>Quick Navigations: </h3><br></br>
+        <a href="#admin-add-course">Add New Course</a>
+        <a href="#admin-available-courses">See Available Courses</a>
+        <a href="#admin-add-catalog">Add Academic Catalog</a>
+        <a href="#admin-academic-catalogs">See Available Academic Catalogs</a>
+        <a href="#admin-student-directory">See User Accounts</a>
+      </nav>
+
+      <section class="panel admin-course-panel" id="admin-add-course">
+        <div class="panel-heading">
+          <div>
+            <h2>Add New Course</h2>
+            <p class="muted">Add new course available for the users to include in their study plans.</p>
+          </div>
+        </div>
+        <form id="admin-course-form" class="admin-course-form">
+          <label class="field"><span>Course Code</span><input id="admin-course-code" maxlength="10" required
+              placeholder="e.g. CSS326"></label>
+          <label class="field field--grow"><span>Course Name</span><input id="admin-course-name" maxlength="100"
+              required placeholder="Course name"></label>
+          <label class="field"><span>Credits</span><input id="admin-course-credit" type="number" min="1" step="1"
+              required placeholder="3"></label>
+          <label class="field"><span>Course Type</span><select id="admin-course-type" required>
+              <option value="Core">Core</option>
+              <option value="Elective">Elective</option>
+            </select></label>
+          <label class="field field--span"><span>Schedule / Semester Offered</span><select id="admin-course-schedule">
+              <option value="">Not specified</option>
+              <option>Year 1 Semester 1</option>
+              <option>Year 1 Semester 2</option>
+              <option>Year 2 Semester 1</option>
+              <option>Year 2 Semester 2</option>
+              <option>Year 3 Semester 1</option>
+              <option>Year 3 Semester 2</option>
+              <option>Year 4 Semester 1</option>
+              <option>Year 4 Semester 2</option>
+            </select></label>
+          <p class="form-message field--span" id="admin-course-message" role="status" aria-live="polite"></p>
+          <button class="button button--primary field--span" type="submit" id="admin-course-submit">Add Course</button>
+        </form>
+      </section>
+      <section class="section-block" id="admin-available-courses">
+        <div class="section-title-row">
+          <div>
+            <h2>See Available Courses</h2>
+          </div><span class="muted" id="admin-course-count">— Courses</span>
+        </div>
+        <div class="table-tools"><input id="admin-course-search" type="search" placeholder="Search course code or name"
+            aria-label="Search courses"><button class="button button--outline" id="admin-refresh" type="button">Refresh
+            ↻</button></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Type</th>
+                <th>Credits</th>
+                <th>Schedule</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-course-table">
+              <tr>
+                <td colspan="6" class="table-empty">Loading courses…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel admin-catalog-panel" id="admin-add-catalog">
+        <div class="panel-heading">
+          <div>
+            <h2>Add Academic Catalog</h2>
+            <p class="muted">Add the catalog year and the file details used by student accounts.</p>
+          </div>
+        </div>
+        <form id="admin-catalog-form" class="admin-catalog-form">
+          <label class="field">
+            <span>Catalog Year</span>
+            <input id="admin-catalog-year" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4"
+              placeholder="e.g. 2027" required>
+          </label>
+          <label class="field">
+            <span>File Name</span>
+            <input id="admin-catalog-file-name" type="text" maxlength="255"
+              placeholder="Undergraduate_Academic_Catalog_2027.pdf" required>
+          </label>
+          <label class="field admin-catalog-url-field">
+            <span>File URL</span>
+            <input id="admin-catalog-file-url" type="url" maxlength="255" placeholder="https://...">
+          </label>
+          <button class="button button--primary" type="submit" id="admin-catalog-submit">Add catalog</button>
+          <p class="form-message admin-catalog-message" id="admin-catalog-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="section-block" id="admin-academic-catalogs">
+        <div class="section-title-row">
+          <div>
+            <h2>See Available Academic Catalogs</h2>
+          </div>
+          <span class="muted" id="admin-catalog-count">— Catalogs</span>
+        </div>
+        <p class="muted section-description">Edit the catalog file name or URL. The catalog year is fixed as
+          the users reference it.</p>
+        <div class="table-tools">
+          <input id="admin-catalog-search" type="search" placeholder="Search catalog year, file name, or URL"
+            aria-label="Search academic catalogs">
+          <button class="button button--outline" id="admin-catalog-refresh" type="button">Refresh ↻</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table admin-catalog-table">
+            <thead>
+              <tr>
+                <th>Catalog Year</th>
+                <th>File Name</th>
+                <th>File URL</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="admin-catalog-table">
+              <tr>
+                <td colspan="4" class="table-empty">Loading academic catalogs…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-block" id="admin-student-directory">
+        <div class="section-title-row">
+          <div>
+            <h2>See User Accounts</h2>
+          </div><span class="muted" id="admin-student-count">— Students</span>
+        </div>
+        <p class="muted section-description">The users' view-only records.</p>
+        <div class="table-tools"><input id="admin-student-search" type="search"
+            placeholder="Search username or student ID" aria-label="Search students"></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Student ID</th>
+                <th>See Details</th>
+              </tr>
+            </thead>
+            <tbody id="admin-student-table">
+              <tr>
+                <td colspan="3" class="table-empty">Loading students…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+  <dialog class="modal" id="admin-student-modal">
+    <form method="dialog" class="modal__close-form"><button class="modal-close" aria-label="Close"
+        value="cancel">×</button></form><span class="eyebrow">READ-ONLY</span>
+    <h2 id="admin-modal-name">Student Profile</h2>
+    <div id="admin-modal-content" class="modal-prose">Loading student information…</div>
+  </dialog>
+
+  <!-- Edit Academic Catalog Popup -->
+  <dialog class="modal" id="admin-catalog-modal">
+    <form method="dialog" class="modal__close-form">
+      <button class="modal-close" aria-label="Close" value="cancel">×</button>
+    </form>
+
+    <h2>Edit Academic Catalog</h2>
+
+    <form id="admin-catalog-edit-form" class="admin-catalog-form">
+      <label class="field">
+        <span>Catalog Year</span>
+        <input id="admin-catalog-edit-year" type="text" readonly>
+      </label>
+
+      <label class="field">
+        <span>File Name</span>
+        <input id="admin-catalog-edit-file-name" type="text" maxlength="255" required>
+      </label>
+      <label class="field admin-catalog-url-field">
+        <span>File URL</span>
+        <input id="admin-catalog-edit-file-url" type="url" maxlength="255">
+      </label>
+      <p class="form-message admin-catalog-message" id="admin-catalog-edit-message" role="status" aria-live="polite">
+      </p>
+      <br></br>
+      <div class="admin-catalog-actions">
+        <button class="button button--outline" type="button" id="admin-catalog-edit-cancel">Cancel</button>
+
+        <button class="button button--primary" type="submit" id="admin-catalog-edit-submit">Save</button>
+      </div>
+    </form>
+  </dialog>
+  <a href="#top" class="admin-back-to-top" aria-label="Back to top">
+    ↑ Back to Top
+  </a>
+  <div id="site-footer"></div>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>My Semester | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+</head>
+
+<body data-page="semester" data-require-role="user">
+  <div id="site-header"></div>
+  <main>
+    <section class="page-hero">
+      <div class="page-width">
+        <h1>My Semester</h1>
+        <p>Stay Focus — See what is happening during your semester</p>
+      </div>
+    </section>
+    <section class="page-width page-content">
+      <div class="semester-toolbar">
+        <div>
+          <h2 id="semester-heading">Semester overview</h2>
+          <p class="muted" id="semester-subheading">Your courses and academic targets.</p>
+        </div>
+        <div class="term-switcher">
+          <label class="field field--compact"><span>Academic Year</span><select id="semester-year"
+              aria-label="Academic year"></select></label>
+          <label class="field field--compact"><span>Semester</span><select id="semester-number" aria-label="Semester">
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Summer</option>
+            </select></label>
+          <button class="button button--outline" id="load-semester" type="button">View Semester</button>
+        </div>
+      </div>
+      <div id="semester-message" class="form-message" role="status" aria-live="polite"></div>
+      <div class="semester-summary-grid" id="semester-summary">
+        <article class="summary-tile"><span>Courses Enrolled</span><strong id="semester-course-count">—</strong>
+        </article>
+        <article class="summary-tile"><span>Credits enrolled</span><strong id="semester-credit-count">—</strong>
+        </article>
+        <article class="summary-tile"><span>Current CGPA</span><strong id="semester-cgpa">—</strong></article>
+        <article class="summary-tile summary-tile--accent"><span>Minimum Target Semester GPA</span><strong
+            id="semester-target-gpa">—</strong><small>for your honors goal</small></article>
+      </div>
+      <section class="panel honor-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>HONORS GOAL</h3>
+          </div><span class="status-badge" id="eligibility-badge">Checking Eligibility</span>
+        </div>
+        <div class="honor-controls">
+          <div><strong id="eligibility-copy">Your current honors eligibility will appear here.</strong>
+            <p class="muted">Your eligibility is calculated from your recorded academic results.</p>
+          </div><label class="field field--compact"><span>Target honors</span><select id="target-honor">
+              <option value="">No target selected</option>
+              <option value="First Class Honors">First Class Honors</option>
+              <option value="Second Class Honors">Second Class Honors</option>
+            </select></label>
+        </div>
+        <p class="form-message" id="honor-message" role="status" aria-live="polite"></p>
+      </section>
+      <section class="section-block">
+        <div class="section-title-row">
+          <div>
+            <h2>Your Courses</h2>
+          </div><span class="muted" id="course-list-caption"></span>
+        </div>
+        <div class="course-list" id="semester-course-list">
+          <div class="loading-state">Loading your courses…</div>
+        </div>
+      </section>
+      <section class="panel add-course-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>Add Course</h3>
+            <p class="muted">Choose a course from the catalogue and add it to this semester.</p>
+          </div>
+        </div>
+        <form id="semester-add-form" class="add-course-form">
+          <label class="field field--grow field--course-picker">
+            <span>Search Course Code / Name</span>
+            <input type="search" id="semester-course-search" placeholder="e.g. CSS326 or Database" autocomplete="off"
+              aria-label="Search the course catalogue" aria-controls="semester-course-select">
+            <select id="semester-course-select" required>
+              <option value="">Select a course from the catalogue</option>
+            </select>
+            <small class="field-hint" id="semester-course-search-count" aria-live="polite">Loading courses…</small>
+          </label>
+          <label class="field field--grade"><span>Grade Earned</span><select id="semester-course-grade">
+              <option value="">Not Graded</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>C+</option>
+              <option>C</option>
+              <option>D+</option>
+              <option>D</option>
+              <option>F</option>
+              <option>ACC</option>
+              <option>W</option>
+            </select></label>
+          <button class="button button--primary" type="submit" id="semester-add-submit">Add course</button>
+        </form>
+      </section>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+
+</html>

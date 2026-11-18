@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>Account | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+</head>
+
+<body data-page="account" data-require-role="user">
+  <div id="site-header"></div>
+  <main class="page-width page-content account-content">
+    <div class="account-welcome">
+      <div>
+        <h1>
+          Hello, <strong id="account-welcome-name">Student</strong> !
+        </h1>
+      </div>
+      <div class="avatar-mark" id="account-avatar">G</div>
+    </div>
+    <section class="panel profile-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>PROFILE</h2>
+        </div>
+      </div>
+      <div class="profile-data-grid">
+        <div class="profile-data">
+          <span>Username</span>
+          <strong id="account-username">—</strong>
+        </div>
+        <div class="profile-data">
+          <span>Student ID</span>
+          <strong id="account-student-id">—</strong>
+        </div>
+        <div class="profile-data">
+          <span>Catalog Year</span>
+          <strong id="account-catalog-year">—</strong>
+        </div>
+        <div class="profile-data">
+          <span>Current Semester</span>
+          <strong id="account-current-semester">—</strong>
+        </div>
+      </div>
+      <div class="catalog-download" id="account-catalog-section" hidden>
+
+        <div class="catalog-download__info">
+          <span class="eyebrow">ACADEMIC CATALOG</span>
+
+          <strong id="account-catalog-file-name">
+            Undergraduate Academic Catalog
+          </strong>
+
+          <!-- ADD THIS MISSING ELEMENT -->
+          <p class="muted" id="account-catalog-description">
+            Catalog file associated with your academic year.
+          </p>
+        </div>
+
+        <a class="button button--outline" id="account-catalog-link" href="#" target="_blank" rel="noopener noreferrer"
+          hidden>
+          Open Catalog ↗
+        </a>
+
+      </div>
+    </div>
+    </section>
+    <section class="panel profile-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>ACADEMIC INFORMATION</h2>
+        </div>
+        <span class="status-badge" id="account-status">—</span>
+      </div>
+      <div class="profile-data-grid profile-data-grid--academic">
+        <div class="profile-data">
+          <span>Major</span>
+          <strong id="account-major">—</strong>
+        </div>
+        <div class="profile-data">
+          <span>CGPA</span>
+          <strong class="accent-value" id="account-cgpa">—</strong>
+        </div>
+        <div class="profile-data">
+          <span>Total Courses Completed</span>
+          <strong id="account-total-courses">—</strong>
+        </div>
+        <div class="profile-data">
+          <span>Total Credits Earned</span>
+          <strong id="account-total-credit">—</strong>
+        </div>
+      </div>
+      <form id="study-info-form" class="profile-edit-form">
+        <label class="field">
+          <span>Study Option</span>
+          <select id="account-study-option">
+            <option value="">Not Selected</option>
+            <option>Data Science</option>
+            <option>Application Software Development</option>
+            <option>General Digital Engineering</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Study Track</span>
+          <select id="account-study-track">
+            <option value="">Not Selected</option>
+            <option>Senior Project</option>
+            <option>Extended Training</option>
+            <option>Overseas Exchange</option>
+          </select>
+        </label>
+        <div class="profile-edit-actions">
+          <p class="form-message" id="account-message" role="status" aria-live="polite">
+          </p>
+          <button class="button button--primary" type="submit" id="account-save">
+            Save Academic Information
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel profile-panel account-settings">
+      <div class="panel-heading">
+        <div>
+          <h2>SETTING</h2>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div>
+          <strong>Change Password</strong>
+          <p class="muted">
+            Update your password to keep your GoDegree account secure.
+          </p>
+        </div>
+        <button class="button button--outline" type="button" id="change-password-button">
+          Change Password
+        </button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <strong>Terms of Use</strong>
+          <p class="muted">
+            Information about using GoDegree.
+          </p>
+        </div>
+        <button class="button button--text" type="button" data-open-info="terms">
+          Read Terms <span>→</span>
+        </button>
+      </div>
+      <div class="settings-row">
+        <div>
+          <strong>Privacy Policy</strong>
+          <p class="muted">
+            How GoDegree handles your information.
+          </p>
+        </div>
+        <button class="button button--text" type="button" data-open-info="privacy">
+          Read Policy <span>→</span>
+        </button>
+      </div>
+    </section>
+    <section class="panel account-delete-panel" aria-labelledby="delete-account-heading">
+      <div>
+        <h2 id="delete-account-heading">DELETE ACCOUNT</h2>
+        <p class="muted">
+          Permanently delete your GoDegree account, student profile,
+          course enrollments, and target honors.
+          This action cannot be undone.
+        </p>
+        <p class="form-message account-delete-message" id="delete-account-message" role="status" aria-live="polite">
+        </p>
+      </div>
+      <button class="button button--danger-outline" type="button" id="delete-account-button">
+        Delete Account
+      </button>
+    </section>
+  </main>
+
+  <dialog class="modal" id="change-password-modal" aria-labelledby="change-password-modal-title">
+    <form method="dialog" class="modal__close-form">
+      <button class="modal-close" aria-label="Close" value="cancel">
+        ×
+      </button>
+    </form>
+    <h2 id="change-password-modal-title">Change Password</h2>
+    <div class="modal-prose">
+      <p>
+        Enter your current password, then choose a new password.
+      </p>
+    </div>
+    <form id="change-password-form" class="form-stack">
+      <div class="field">
+        <label for="change-password-current">Current Password</label>
+        <div class="password-wrap">
+          <input id="change-password-current" name="current_password" type="password" autocomplete="current-password"
+            required>
+          <button class="password-toggle" type="button" data-toggle-password="change-password-current"
+            aria-label="Show password">
+            Show
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="change-password-new">New Password</label>
+        <div class="password-wrap">
+          <input id="change-password-new" name="new_password" type="password" autocomplete="new-password" minlength="8"
+            maxlength="72" required>
+          <button class="password-toggle" type="button" data-toggle-password="change-password-new"
+            aria-label="Show password">
+            Show
+          </button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="change-password-confirm">Confirm New Password</label>
+        <div class="password-wrap">
+          <input id="change-password-confirm" name="confirm_password" type="password" autocomplete="new-password"
+            minlength="8" maxlength="72" required>
+          <button class="password-toggle" type="button" data-toggle-password="change-password-confirm"
+            aria-label="Show password">
+            Show
+          </button>
+        </div>
+      </div>
+      <p class="form-message" id="change-password-message" role="alert" aria-live="polite">
+      </p>
+      <div class="button-row delete-account-actions">
+        <button class="button button--outline" type="button" id="cancel-change-password">
+          Cancel
+        </button>
+        <button class="button button--primary" type="submit" id="change-password-submit">
+          Save New Password
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal modal--danger" id="delete-account-modal" aria-labelledby="delete-account-modal-title">
+    <form method="dialog" class="modal__close-form">
+      <button class="modal-close" aria-label="Close" value="cancel">
+        ×
+      </button>
+    </form>
+    <h2 id="delete-account-modal-title">Are You Sure?</h2>
+    <div class="modal-prose">
+      <p>
+        This will permanently remove your GoDegree account and its
+        associated student records, including course enrollments
+        and target honors.
+      </p>
+      <p>
+        <strong>This cannot be undone.</strong>
+        Enter your current password to confirm.
+      </p>
+    </div>
+    <form id="delete-account-form" class="form-stack">
+      <label class="field" for="delete-account-password">
+        <span>Current Password</span>
+        <input id="delete-account-password" name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <label class="delete-account-consent">
+        <input id="delete-account-confirm" type="checkbox" required>
+        <span>
+          I understand that my account and associated records
+          will be permanently deleted.
+        </span>
+      </label>
+      <p class="form-message" id="delete-account-modal-message" role="alert" aria-live="polite">
+      </p>
+      <div class="button-row delete-account-actions">
+        <button class="button button--outline" type="button" id="cancel-delete-account">
+          Cancel
+        </button>
+        <button class="button button--danger" type="submit" id="confirm-delete-account">
+          Permanently Delete Account
+        </button>
+      </div>
+    </form>
+  </dialog>
+  <dialog class="modal" id="info-modal">
+    <form method="dialog" class="modal__close-form">
+      <button class="modal-close" aria-label="Close" value="cancel">
+        ×
+      </button>
+    </form>
+    <span class="eyebrow" id="info-modal-eyebrow">
+      GODEGREE
+    </span>
+    <h2 id="info-modal-title">Information</h2>
+    <div class="modal-prose" id="info-modal-content"></div>
+  </dialog>
+  <div id="site-footer"></div>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>Graduation Plan | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+</head>
+
+<body data-page="plan" data-require-role="user">
+  <div id="site-header"></div>
+  <main>
+    <section class="page-hero">
+      <div class="page-width">
+        <h1>Graduation Plan</h1>
+        <p>Aim High — Plan your path toward your success</p>
+      </div>
+    </section>
+    <section class="page-width page-content">
+      <section class="plan-intro">
+        <div>
+          <h2 id="plan-title">Your academic record</h2>
+        </div>
+        <div class="plan-stat"><span>Total Credits Earned</span><strong id="plan-total-credits">— <small>/
+              136</small></strong></div>
+        <div class="plan-stat"><span>Overall CGPA</span><strong id="plan-overall-cgpa">—</strong></div>
+      </section>
+      <section class="panel add-course-panel">
+        <div class="panel-heading">
+          <div>
+            <h3>ADD COURSES TO YOUR ACADEMIC RECORD</h3>
+            <p class="muted">Search for a course by code or name, select a semester, and enter a grade when available.
+            </p>
+          </div>
+        </div>
+        <form id="plan-add-form" class="plan-add-grid">
+          <label class="field field--course-search"><span>Search Course Code / Name</span><input type="search"
+              id="plan-course-search" placeholder="e.g. CSS326 or Database" autocomplete="off"
+              aria-label="Search the course catalogue" aria-controls="plan-course-select"></label>
+          <label class="field field--course"><small class="field-hint" id="plan-course-search-count"
+              aria-live="polite">Loading
+              courses…</small><select id="plan-course-select" required>
+              <option value="">Choose A course</option>
+            </select></label>
+          <label class="field"><span>Academic Year</span><select id="plan-year" required></select></label>
+          <label class="field"><span>Semester</span><select id="plan-semester" required>
+              <option value="1">Semester 1</option>
+              <option value="2">Semester 2</option>
+              <option value="3">Summer</option>
+            </select></label>
+          <label class="field"><span>Grade Earned</span><select id="plan-grade">
+              <option value="">Not Graded</option>
+              <option>A</option>
+              <option>B+</option>
+              <option>B</option>
+              <option>C+</option>
+              <option>C</option>
+              <option>D+</option>
+              <option>D</option>
+              <option>F</option>
+              <option>ACC</option>
+              <option>W</option>
+            </select></label>
+          <button class="button button--primary" type="submit" id="plan-add-submit">Add Course</button>
+        </form>
+        <p class="form-message" id="plan-message" role="status" aria-live="polite"></p>
+      </section>
+      <section class="section-block">
+        <div class="section-title-row">
+          <div>
+            <h2>Academic Timeline</h2>
+          </div><span class="muted">Year 1 – Year 4</span>
+        </div>
+        <div class="year-list" id="graduation-years">
+          <div class="loading-state">Loading your graduation plan…</div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+
+</html>

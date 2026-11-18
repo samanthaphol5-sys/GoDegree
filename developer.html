@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#b93a1c">
+  <title>Developer Console | GoDegree</title>
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <script defer src="/assets/js/core.js"></script>
+  <script defer src="/assets/js/pages.js"></script>
+</head>
+
+<body data-page="developer" data-require-role="dev">
+  <div id="site-header"></div>
+  <main>
+    <section class="page-hero">
+      <div class="page-width">
+        <h1>DEVELOPER CONSOLE</h1>
+      </div>
+    </section>
+    <section class="page-width page-content">
+      <section class="section-block">
+        <div class="section-title-row">
+          <div>
+            <h2>System Statistics</h2>
+          </div><button class="button button--outline" id="dev-refresh" type="button">Refresh ↻</button>
+        </div>
+        <div class="stats-grid" id="dev-stats">
+          <article class="stat-card"><span>Total Accounts</span><strong>—</strong></article>
+          <article class="stat-card"><span>Students</span><strong>—</strong></article>
+          <article class="stat-card"><span>Administrators</span><strong>—</strong></article>
+          <article class="stat-card"><span>Developers</span><strong>—</strong></article>
+          <article class="stat-card"><span>Active Today</span><strong>—</strong></article>
+          <article class="stat-card"><span>New This Month</span><strong>—</strong></article>
+        </div>
+      </section>
+      <section class="section-block">
+        <div class="section-title-row">
+          <div>
+            <h2>Registered Accounts</h2>
+          </div><span class="muted" id="dev-user-count">— Accounts</span>
+        </div>
+        <div class="table-tools"><input id="dev-user-search" type="search"
+            placeholder="Search username, student ID, or role" aria-label="Search accounts"></div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Student ID</th>
+                <th>Role</th>
+                <th>Date Created</th>
+                <th>Last Visited</th>
+              </tr>
+            </thead>
+            <tbody id="dev-user-table">
+              <tr>
+                <td colspan="5" class="table-empty">Loading accounts…</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="section-block">
+        <div class="section-title-row">
+          <div>
+            <h2>Request Log</h2>
+          </div><span class="muted" id="dev-log-since">—</span>
+        </div>
+        <div class="log-filters"><label class="field field--compact"><span>HTTP Status</span><select
+              id="dev-log-status">
+              <option value="">All Requests</option>
+              <option value="4xx">4xx Client Errors</option>
+              <option value="5xx">5xx Server Errors</option>
+              <option value="404">404 Only</option>
+              <option value="401">401 Unauthorized</option>
+              <option value="403">403 Forbidden</option>
+            </select></label><label class="field field--compact"><span>Number of Entries</span><select
+              id="dev-log-limit">
+              <option>20</option>
+              <option selected>50</option>
+              <option>100</option>
+              <option>200</option>
+            </select></label><button class="button button--outline" id="dev-log-refresh" type="button">Apply Filter</button></div>
+        <div class="request-log" id="dev-request-log">
+          <div class="loading-state">Loading request log…</div>
+        </div>
+      </section>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+</body>
+
+</html>
